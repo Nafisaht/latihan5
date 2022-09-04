@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,15 @@ use App\Http\Controllers\ItemController;
 //     return view('welcome');
 // });
 
-Route::get("/", [ItemController::class, "index"]);
-Route::get("/create", [ItemController::class, "create"])->name("create");
-Route::post("/store", [ItemController::class, "store"])->name("store");
-Route::get("/edit/{id}", [ItemController::class, "edit"])->name("edit");
-Route::post("/update/{id}", [ItemController::class, "update"])->name("update");
-Route::delete("/destroy/{id}", [ItemController::class, "destroy"])->name("destroy");
+Route::get("/", [ItemController::class, "index"])->name("items.index");
+Route::get("/create", [ItemController::class, "create"])->name("items.create");
+Route::post("/store", [ItemController::class, "store"])->name("items.store");
+Route::get("/edit/{id}", [ItemController::class, "edit"])->name("items.edit");
+Route::patch("/update/{id}", [ItemController::class, "update"])->name("items.update");
+Route::delete("/destroy/{id}", [ItemController::class, "destroy"])->name("items.destroy");
+
+Route::get("items.create", function () {
+    return view('items.index');
+});
+
+Route::resource('types', ItemTypeController::class);
